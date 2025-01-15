@@ -1,0 +1,42 @@
+name: Laravel Deploy
+
+on:
+  push:
+    branches:
+      - main  # Change this to your main branch (e.g., 'master' or 'production')
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'  # Specify the PHP version that your project uses
+
+    - name: Install dependencies
+      run: |
+        composer install --no-interaction --prefer-dist
+
+    - name: Set up database and environment
+      run: |
+        cp .env.example .env  # Copy the .env file if it doesn't exist
+        php artisan key:generate  # Generate Laravel app key
+        php artisan migrate --force  # Run migrations
+        php artisan config:cache  # Cache configurations
+        php artisan route:cache  # Cache routes
+        php artisan view:cache  # Cache views
+
+    - name: Deploy to Server
+      run: |
+        # Replace these commands with your deployment process, for example:
+        # SSH into the server and run deployment commands
+        ssh user@yourserver.com "cd /path/to/your/laravel/project && git pull origin main && php artisan migrate --force"
+
+    - name: Clean up
+      run: |
+        rm -rf storage/framework/cache/*

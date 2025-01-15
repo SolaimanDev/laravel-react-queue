@@ -30,4 +30,5 @@ Route::middleware('auth:sanctum')->group(function () {
    // Route::get('users', [UserController::class, 'index']);
    // Route::get('users/{id}', [UserController::class, 'show']);
    Route::apiResource('products', ProductController::class);
+   Route::get('products/check-stock/{id}', [ProductController::class, 'checkStock']);
 });

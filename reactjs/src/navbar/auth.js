@@ -2,9 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Routes, Route, Link } from 'react-router-dom';
-import Home from '../components/home';
-import Dashboard from '../components/dashboard';
-import Products from '../components/products';
+
 import AuthUser from '../components/AuthUser';
 
 function Auth() {
@@ -37,13 +35,7 @@ function Auth() {
                     </Nav>
                 </Container>
             </Navbar>
-            <div className="container">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/products" element={<Products />} />
-                </Routes>
-            </div>
+
         </>
     );
 }

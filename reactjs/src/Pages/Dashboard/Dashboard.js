@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import AuthUser from './AuthUser';
+import AuthUser from '../../components/AuthUser';
 import Card from 'react-bootstrap/Card';
 export default function Dashboard() {
     const {http} = AuthUser();

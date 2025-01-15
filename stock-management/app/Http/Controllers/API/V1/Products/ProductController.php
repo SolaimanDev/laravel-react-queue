@@ -106,10 +106,19 @@ class ProductController extends Controller
         }
     }
 
-    public function checkStock($product)
+    public function checkStock($productId)
     {
+       try {
+        $product = $this->productService->getById($productId);
         if ($product->stock < $product->minimum_stock_quantity) {
             NotifyLowStockJob::dispatch($product);
+            return $this->success(null, 'Stock out mail sent.');
+        }else{
+            return $this->success(null, 'Stock checked successfully.');
         }
+       
+       } catch (\Exception $e) {
+        return $this->error('Failed to delete product: ' . $e->getMessage(), 500);
+       }
     }
 }

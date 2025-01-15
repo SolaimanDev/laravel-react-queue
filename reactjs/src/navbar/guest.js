@@ -1,7 +1,5 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import Home from '../components/home';
-import Login from '../components/login';
-import Register from '../components/register';
+
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -28,13 +26,7 @@ function Guest() {
                     </Nav>
                 </Container>
             </Navbar>
-            <div className="container">
-            <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
-            </div>
+
         </>
     );
 }

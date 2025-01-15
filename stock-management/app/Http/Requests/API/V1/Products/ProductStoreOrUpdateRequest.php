@@ -22,24 +22,37 @@ class ProductStoreOrUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('products')->ignore($this->route('id')),
-            ],
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0',
-            'minimum_stock_quantity' => 'required|integer|min:0',
-        ];
-    
-        if ($this->isMethod('patch') || $this->isMethod('put')) {
-            $rules['name'][] = Rule::unique('products')->ignore($this->route('id'));
+        if ($this->isMethod('post')) {
+            // Rules for creating a new product
+            return [
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('products', 'name'), // Must be unique for all products
+                ],
+                'description' => 'nullable|string',
+                'price' => 'required|numeric|min:0',
+                'stock' => 'required|integer|min:0',
+                'minimum_stock_quantity' => 'required|integer|min:0',
+            ];
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
+            // Rules for updating an existing product
+            $productId = $this->route('id'); // Retrieve the product ID from the route
+            return [
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                   
+                ],
+                'description' => 'nullable|string',
+                'price' => 'required|numeric|min:0',
+                'stock' => 'required|integer|min:0',
+                'minimum_stock_quantity' => 'required|integer|min:0',
+            ];
         }
-    
-        return $rules;
+
+        return [];
     }
-    
 }
